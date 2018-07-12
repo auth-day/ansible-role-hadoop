@@ -1,0 +1,16 @@
+---
+
+- name: download Hadoop
+  get_url: url="http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz
+
+- name: unpack Hadoop
+  unarchive: copy=no src="{{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
+
+- name: create hadoop user
+  user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
+
+- name: create hadoop var dir 
+  file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
+
+- name: put core-site.xml 
+  template: src=core-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/core-site.xml

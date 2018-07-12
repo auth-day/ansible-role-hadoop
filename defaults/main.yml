@@ -1,0 +1,6 @@
+hadoop_version: 3.1.0
+hadoop_unarchive_prefix: /opt
+hadoop_distribution_dir: /tmp
+hadoop_var_prefix: /var/hadoop
+hadoop_user: hadoop
+hadoop_user_shell: /usr/sbin/nologin
