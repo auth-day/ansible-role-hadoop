@@ -1,16 +1,94 @@
 ---
 
-- name: download Hadoop
-  get_url: url="http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz
-
-- name: unpack Hadoop
-  unarchive: copy=no src="{{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
-
 - name: create hadoop user
   user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
 
-- name: create hadoop var dir 
+- name: download Hadoop
+  get_url: url="http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz 
+
+- name: unpack Hadoop
+  unarchive: copy=no src="{{ hadoop_distribution_dir }}/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}  owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
+
+- name: create {{ hadoop_var_prefix }} for storing tmp files and hdfs dirs 
   file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
 
-- name: put core-site.xml 
-  template: src=core-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/core-site.xml
+- name: create /etc/hadoop
+  file: path=/etc/hadoop state=directory owner=root group=root mode=0755
+
+
+
+- name: PUT hosts-allowed file for HDFS
+  template: src=hosts-allowed.j2 dest=/etc/hadoop/hosts-allowed owner=root group=root mode=0644
+
+- name: create LINK to {{ hadoop_var_prefix }} for hosts-allowed
+  file: state=link src=/etc/hadoop/hosts-allowed dest={{ hadoop_var_prefix }}/hosts-allowed
+  
+
+
+- name: PUT hosts-exclusion file for HDFS
+  template: src=hosts-exclusion.j2 dest=/etc/hadoop/hosts-exclusion owner=root group=root mode=0644 
+
+- name: create LINK to {{ hadoop_var_prefix }} for hosts-exclusion 
+  file: state=link src=/etc/hadoop/hosts-exclusion dest={{ hadoop_var_prefix }}/hosts-exclusion 
+
+
+
+- name: PUT core-site.xml 
+  template: src=core-site.xml.j2 dest=/etc/hadoop/core-site.xml owner=root group=root mode=0644 
+
+- name: create LINK core-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/ 
+  file: state=link src=/etc/hadoop/core-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/core-site.xml
+
+
+
+- name: PUT hdfs-site.xml 
+  template: src=hdfs-site.xml.j2 dest=/etc/hadoop/hdfs-site.xml owner=root group=root mode=0644
+
+- name: create LINK hdfs-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/
+  file: state=link src=/etc/hadoop/hdfs-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/hdfs-site.xml
+
+
+
+- name: PUT hadoop-env.sh 
+  template: src=hadoop-env.sh.j2 dest=/etc/hadoop/hadoop-env.sh owner=root group=root mode=0644
+
+- name: create LINK hadoop-env.sh to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/
+  file: state=link src=/etc/hadoop/hadoop-env.sh dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-env.sh
+
+
+
+- name: PUT hadoop-metrics.properties
+  template: src=hadoop-metrics.properties.j2 dest=/etc/hadoop/hadoop-metrics.properties owner=root group=root mode=0644
+
+- name: create LINK hadoop-metrics.properties to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
+  file: state=link src=/etc/hadoop/hadoop-metrics.properties dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-metrics.properties
+
+
+
+- name: PUT yarn-env.sh 
+  template: src=yarn-env.sh.j2 dest=/etc/hadoop/yarn-env.sh owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False)
+
+- name: create LINK yarn-env.sh to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
+  file: state=link src=/etc/hadoop/yarn-env.sh  dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-env.sh
+  when: (disable_yarn|default(False) == False)
+
+
+
+- name: PUT yarn-site.xml 
+  template: src=yarn-site.xml.j2 dest=/etc/hadoop/yarn-site.xml owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False)
+
+- name: create LINK yarn-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
+  file: state=link src=/etc/hadoop/yarn-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-site.xml
+  when: (disable_yarn|default(False) == False) 
+
+
+
+- name: PUT mapred-site.xml
+  template: src=mapred-site.xml.j2 dest=/etc/hadoop/mapred-site.xml owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False) 
+
+- name: create LINK mapred-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
+  file: state=link src=/etc/hadoop/mapred-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/mapred-site.xml
+  when: (disable_yarn|default(False) == False) 

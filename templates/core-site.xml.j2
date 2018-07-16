@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://{{ hdfs_servicename }}</value>
+  </property>
+
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>{{ hadoop_var_prefix }}/tmp</value>
+  </property>
+
+<!--  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>{{ hadoop_var_prefix }}/exclusion-list</value>
+  </property>
+-->
+  <property>
+    <name>dfs.hosts</name>
+    <value>{{ hadoop_var_prefix }}/hosts-allowed</value>
+  </property>
+  
+   <property>
+    <name>hadoop.registry.zk.quorum</name>
+    <value>{{ zookeeper_quorum }}</value>
+  </property>
+
+</configuration>
+
