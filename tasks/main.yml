@@ -34,10 +34,10 @@
 
 
 - name: PUT core-site.xml 
-  template: src=core-site.xml.j2 dest=/etc/hadoop/core-site.xml owner=root group=root mode=0644 
+  template: src=core-site.xml.j2 dest=/etc/hadoop/core-site.xml owner=root group=root mode=0644
 
 - name: create LINK core-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/ 
-  file: state=link src=/etc/hadoop/core-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/core-site.xml
+  file: state=link src=/etc/hadoop/core-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/core-site.xml force=yes
 
 
 
@@ -45,7 +45,7 @@
   template: src=hdfs-site.xml.j2 dest=/etc/hadoop/hdfs-site.xml owner=root group=root mode=0644
 
 - name: create LINK hdfs-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/
-  file: state=link src=/etc/hadoop/hdfs-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/hdfs-site.xml
+  file: state=link src=/etc/hadoop/hdfs-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{hadoop_version }}/etc/hadoop/hdfs-site.xml force=yes
 
 
 
@@ -53,7 +53,7 @@
   template: src=hadoop-env.sh.j2 dest=/etc/hadoop/hadoop-env.sh owner=root group=root mode=0644
 
 - name: create LINK hadoop-env.sh to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/
-  file: state=link src=/etc/hadoop/hadoop-env.sh dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-env.sh
+  file: state=link src=/etc/hadoop/hadoop-env.sh dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-env.sh force=yes
 
 
 
@@ -61,7 +61,7 @@
   template: src=hadoop-metrics.properties.j2 dest=/etc/hadoop/hadoop-metrics.properties owner=root group=root mode=0644
 
 - name: create LINK hadoop-metrics.properties to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
-  file: state=link src=/etc/hadoop/hadoop-metrics.properties dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-metrics.properties
+  file: state=link src=/etc/hadoop/hadoop-metrics.properties dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/hadoop-metrics.properties force=yes
 
 
 
@@ -70,7 +70,7 @@
   when: (disable_yarn|default(False) == False)
 
 - name: create LINK yarn-env.sh to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
-  file: state=link src=/etc/hadoop/yarn-env.sh  dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-env.sh
+  file: state=link src=/etc/hadoop/yarn-env.sh  dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-env.sh force=yes
   when: (disable_yarn|default(False) == False)
 
 
@@ -80,7 +80,7 @@
   when: (disable_yarn|default(False) == False)
 
 - name: create LINK yarn-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
-  file: state=link src=/etc/hadoop/yarn-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-site.xml
+  file: state=link src=/etc/hadoop/yarn-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/yarn-site.xml force=yes
   when: (disable_yarn|default(False) == False) 
 
 
@@ -90,5 +90,5 @@
   when: (disable_yarn|default(False) == False) 
 
 - name: create LINK mapred-site.xml to {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/ 
-  file: state=link src=/etc/hadoop/mapred-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/mapred-site.xml
+  file: state=link src=/etc/hadoop/mapred-site.xml dest={{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/etc/hadoop/mapred-site.xml force=yes
   when: (disable_yarn|default(False) == False) 

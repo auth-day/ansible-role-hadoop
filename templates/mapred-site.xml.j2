@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+    <describtion>Execution framework set to Hadoop YARN</describtion>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>{{ jobhistory_host }}:{{ jobhistory_port }}</value>
+    <describtion>MapReduce JobHistory Server IPC host:port</describtion>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>{{ jobhistory_host }}:{{ jobhistory_webapp_port }}</value>
+    <describtion>MapReduce JobHistory Server Web UI host:port</describtion>
+  </property>
+
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>{{ mapreduce_map_memory }}</value>
+    <describtion>The amount of memory to request from the scheduler for each map task.</describtion>
+  </property>
+
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>{{ mapreduce_reduce_memory }}</value>
+    <describtion>The amount of memory to request from the scheduler for each reduce task.</describtion>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.admin.address</name>
+    <value>{{ jobhistory_host }}:{{ jobhistory_admin_port }}</value>
+    <describtion>The address of the History server admin interface.</describtion>
+  </property>
+
+</configuration>

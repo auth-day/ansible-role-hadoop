@@ -1,10 +1,45 @@
-java_path:
+java_path: /opt/java
+namenode_1: test1
+namenode_2: test2
+namenode_rpc_port: 8020
+namenode_http_port: 50070
+datanode_http_port: 50075
+datanode_ipc_port: 50020
+datanode_port: 50010
 hadoop_version: 3.1.0
 hadoop_unarchive_prefix: /opt
 hadoop_distribution_dir: /tmp
 hadoop_var_prefix: /var/hadoop
 hadoop_user: hadoop
 hadoop_user_shell: /usr/sbin/nologin
-hadoop_heapsize:
-hdfs_servicename: 
-zookeeper_quorum:
+hadoop_heapsize: 2048
+journalnode_1: test
+journalnode_2: test2
+journalnode_3: test3
+journalnode_rpc_port: 8485
+journalnode_http_port: 8480
+hdfs_logical_name: test
+hdfs_datanode_data_dirs: [ "{{ hadoop_var_prefix }}/dfs/data" ]
+hdfs_namenode_name_dirs: [ "{{ hadoop_var_prefix }}/dfs/name" ]
+jobhistory_host: test
+jobhistory_port: 10020
+jobhistory_webapp_port: 19888
+jobhistory_admin_port: 10033
+mapreduce_map_memory: 2048
+mapreduce_reduce_memory: 2048
+yarn_heapsize: 2048
+yarn_resourcemanager_host: test
+yarn_resourcemanager_port: 8032
+yarn_resourcemanager_resourcetracker_port: 8031
+yarn_resourcemanager_scheduler_port: 8030
+yarn_resourcemanager_webapp_port: 8088
+yarn_resourcemanager_admin_port: 8033
+yarn_nodemanager_localizer_port: 8040
+yarn_nodemanager_webapp_port: 8042
+yarn_nodemanager_port: 0
+yarn_nodemanager_avail_mem: 4096
+yarn_scheduler_min_mem: 1024
+yarn_var_prefix: /var/hadop-yarn/logs
+yarn_mapreduce_staging_dir: /var/hadoop-yarn/staging
+yarn_nodemanager_vcores: 4
+zookeeper_quorum: test

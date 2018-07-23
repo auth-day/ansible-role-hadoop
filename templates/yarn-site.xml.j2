@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.queues</name>
+    <value>default</value>
+    <description>The queues at the this level (root is the root queue).</description>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.capacity.root.default.capacity</name>
+    <value>100</value>
+    <description>Capacity of the queue (sum of all capacities shoud be 100).</description>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+    <value>{{ yarn_resourcemanager_host }}:{{ yarn_resourcemanager_resourcetracker_port }}</value>
+    <description>Tracker address.</description>
+  </property>
+
+  <property>
+    <name>yarn.log-aggregation-enable</name>
+    <value>true</value>
+    <description>Whether to enable log aggregation.</description>
+  </property>
+
+
+  <property>
+    <name>yarn.log-aggregation.retain-seconds</name>
+    <value>600000</value>
+    <description>How long to keep aggregation logs before deleting them. -1 disables. Be careful set this too small and you will spam the name node.</description>
+  </property>
+
+
+  <property>
+    <name>yarn.nodemanager.remote-app-log-dir</name>
+    <value>{{ yarn_var_prefix }}/apps</value>
+    <description>Where to aggregate logs to.</description>
+  </property>
+
+  <property>
+    <name>yarn.app.mapreduce.am.staging-dir</name>
+    <value>{{ yarn_mapreduce_staging_dir }}</value>
+    <describtion>The staging dir used while submitting jobs.</describtion>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.address</name>
+    <value>{{ yarn_resourcemanager_host }}:{{ yarn_resourcemanager_port }}</value>
+    <description>ResourceManager host:port for clients to submit jobs</description>
+  </property>
+
+
+  <property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+    <value>{{ yarn_resourcemanager_host }}:{{ yarn_resourcemanager_scheduler_port }}</value>
+    <description>ResourceManager Scheduler RPC (for ApplicationMasters).</description>
+  </property>
+
+
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>{{ yarn_resourcemanager_host }}</value>
+    <description>Resourcemanager hostname.</description>
+  </property>
+
+
+  <property>
+    <name>yarn.resourcemanager.webapp.address</name>
+    <value>{{ yarn_resourcemanager_host }}:{{ yarn_resourcemanager_webapp_port }}</value>
+    <description>The http address of the RM web application. If only a host is provided as the value, the webapp will be served on a random port.</description>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.admin.address</name>
+    <value>{{ yarn_resourcemanager_host }}:{{ yarn_resourcemanager_admin_port }}</value>
+    <description>The address of the RM admin interface</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.localizer.address</name>
+    <value>${yarn-nodemanager.hostname}:{{ yarn_nodemanager_localizer_port }}</value>
+    <description>Address where the localizer IPC is.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.webapp.address</name>
+    <value>${yarn.nodemanager.hostname}:{{ yarn_nodemanager_webapp_port  }}</value>
+    <description>NM Webapp address.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.address</name>
+    <value>${yarn.nodemanager.hostname}:{{ yarn_nodemanager_port }}</value>
+    <description>The address of the container manager in the NM.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+    <describtion>Tells NodeManagers that there will be an auxiliary service called mapreduce.shuffle that they need to implement.</describtion>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    <describtion>We tell the NodeManagers to implement that service, we give it a class name as the means to implement that service. This particular configuration tells MapReduce how to do its shuffle. Because NodeManagers won't shuffle data for a non-MapReduce job by default, we need to configure such a service for MapReduce.</describtion>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>{{ yarn_nodemanager_avail_mem }}</value>
+    <description>Amount of physical memory, in MB, that can be allocated for containers. If set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically calculated(in case of Windows and Linux). In other cases, the default is 8192MB.</description>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.minimum-allocation-mb</name>
+    <value>{{ yarn_scheduler_min_mem }}</value>
+    <description>The minimum allocation for every container request at the RM in MBs. Memory requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have less memory than this value will be shut down by the resource manager.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.resource.cpu-vcores</name>
+    <value>{{ yarn_nodemanager_vcores }}</value>
+    <description>Number of vcores that can be allocated for containers. This is used by the RM scheduler when allocating resources for containers. This is not used to limit the number of CPUs used by YARN containers. If it is set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically determined from the hardware in case of Windows and Linux. In other cases, number of vcores is 8 by default.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+    <description>Whether virtual memory limits will be enforced for containers.</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.process-kill-wait.ms</name>
+    <value>30000</value>
+    <description>Max time to wait for a process to come up when trying to cleanup a container</description>
+  </property>
+
+
+
+  <property>
+    <name>yarn.nodemanager.delete.debug-delay-sec</name>
+    <value>1200</value>
+    <description>Number of seconds after an application finishes before the nodemanager's DeletionService will delete the application's localized file directory and log directory. </description>
+  </property>
+
+</configuration>
