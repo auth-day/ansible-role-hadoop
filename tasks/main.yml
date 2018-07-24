@@ -17,11 +17,6 @@
   with_items:
     - "{{ hdfs_datanode_data_dirs }}"
 
-- name: create {{ hdfs_namenode_name_dirs }} dirs for namenode
-  file: path={{ item }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
-  with_items:
-    - "{{ hdfs_namenode_name_dirs }}"
-
 - name: create /etc/hadoop
   file: path=/etc/hadoop state=directory owner=root group=root mode=0755
 
