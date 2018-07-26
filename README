@@ -1,6 +1,6 @@
 Before getting started working with playbook you have to add to inventory file groups named "hosts_allowed", wich include all the hosts you want to be able to connect to namenode
 
-[hosts-allowed]
+[hosts_allowed]
 host
 host1
 host2
