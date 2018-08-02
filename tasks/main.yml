@@ -26,12 +26,6 @@
 - name: create {{ hadoop_var_prefix }} for storing tmp files and hdfs dirs
   file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
 
-## move in ansible-role-hdsf-datanode 
-- name: create {{ hdfs_datanode_data_dirs }} dirs for datanode
-  file: path={{ item }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
-  with_items:
-    - "{{ hdfs_datanode_data_dirs }}"
-
 
 
 - name: PUT hosts-allowed file for HDFS
